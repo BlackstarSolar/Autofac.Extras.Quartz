@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>f7b6ab81-2630-4bb6-ab21-a541d9d41c73</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Autofac.Extras.Quartz</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AutofacJobFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AutofacSchedulerFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)QuartzAutofacFactoryModule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)QuartzAutofacJobsModule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)job_scheduling_data_2_0.xsd" />
+  </ItemGroup>
+</Project>

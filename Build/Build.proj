@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="BuildAll" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <ReSharperToolsVersion>2016.3.20161223.160402</ReSharperToolsVersion>
+    <XsltTransformVersion>0.3.1</XsltTransformVersion>
+  </PropertyGroup>
+
+  <!-- build settings -->
+  <PropertyGroup>
+    <NugetLibFrameworkVersion>net462</NugetLibFrameworkVersion>
+    <UseNUnit3>true</UseNUnit3>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssembliesToTestWithNUnit Include="$(SolutionsPath)\Tests\bin\Release\Autofac.Extras.Quartz.Tests.dll;" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NugetPackage Include="
+        $(SolutionsPath)\Autofac.Extras.Quartz.Net45\bin\Release\Autofac.Extras.Quartz.dll;
+        $(SolutionsPath)\Autofac.Extras.Quartz.Net45\bin\Release\Autofac.Extras.Quartz.xml;
+        $(SolutionsPath)\Autofac.Extras.Quartz.Net45\bin\Release\Autofac.Extras.Quartz.pdb;">
+      <PackageName>Autofac.Extras.Quartz</PackageName>
+      <NuspecFile>Autofac.Extras.Quartz.nuspec</NuspecFile>
+      <TargetFramework>net45</TargetFramework>
+    </NugetPackage>
+
+    <NugetPackage Include="
+        $(SolutionsPath)\Autofac.Extras.Quartz.NetStandard13\bin\Release\Autofac.Extras.Quartz.dll;
+        $(SolutionsPath)\Autofac.Extras.Quartz.NetStandard13\bin\Release\Autofac.Extras.Quartz.xml;
+        $(SolutionsPath)\Autofac.Extras.Quartz.NetStandard13\bin\Release\Autofac.Extras.Quartz.pdb;">
+      <PackageName>Autofac.Extras.Quartz</PackageName>
+      <NuspecFile>Autofac.Extras.Quartz.nuspec</NuspecFile>
+      <TargetFramework>netstandard1.3</TargetFramework>
+    </NugetPackage>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <SolutionName>Autofac.Extras.Quartz</SolutionName>
+    <SolutionsPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\..\Solutions'))</SolutionsPath>
+    <BuildPath>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\..\BuildSystem'))</BuildPath>
+    <SamplesPath>$([System.IO.Path]::GetFullPath('$(SolutionsPath)\Samples'))</SamplesPath>
+  </PropertyGroup>
+
+  <Import Project="$(BuildPath)\BuildSystem.proj" />
+
+  <PropertyGroup>
+    <ReSharperToolsPath>$(SolutionRoot)\Packages\JetBrains.ReSharper.CommandLineTools.$(ReSharperToolsVersion)\tools</ReSharperToolsPath>
+    <DupFinderExe>$(ReSharperToolsPath)\dupfinder.exe</DupFinderExe>
+    <CodeInspectionsExe>$(ReSharperToolsPath)\inspectCode.exe</CodeInspectionsExe>
+    <DuplicatesReportPath>$(DropsPath)\Duplicates</DuplicatesReportPath>
+    <CodeInspectionsReportPath>$(DropsPath)\Inspections</CodeInspectionsReportPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OpenCoverFilter>+[Autofac.Extras.Quartz]* +[Autofac.Extras.Quartz.Tests]*</OpenCoverFilter>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <DuplicatesReportTemplate Include="$(ToolsPath)\DupFinder.xslt">
+      <BuildNumber>$(SemanticVersion)</BuildNumber>
+    </DuplicatesReportTemplate>
+    <CodeInspectionsReportTemplate Include="$(ToolsPath)\CodeInspections.xslt">
+      <BuildNumber>$(SemanticVersion)</BuildNumber>
+    </CodeInspectionsReportTemplate>
+  </ItemGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\..\Packages\Alphacloud.MSBuild.Xslt.$(XsltTransformVersion)\tools\Alphacloud.MSBuild.Xslt.targets" />
+
+  <Target Name="Build" DependsOnTargets="
+    CleanSolution;
+    EnsureAssemblyVersion;
+    BuildSolutions;
+    " />
+
+
+  <Target Name="RunTests" DependsOnTargets="
+    Build;
+		RunNUnitTests;
+    " />
+
+  <Target Name="PackageArtefacts" DependsOnTargets="
+    Build;
+		RunTests;
+		Package;
+		PackageNuget;
+		BuildSuccess
+    " />
+
+  <Target Name="FindDuplicates">
+    <MakeDir Directories="$(DuplicatesReportPath)" ContinueOnError="true" />
+    <Exec
+      WorkingDirectory="$(SolutionsPath)"
+      Command="$(DupFinderExe) /output=&quot;$(DuplicatesReportPath)\dupReport.xml&quot; /show-text &quot;$(SolutionsPath)\$(SolutionName).sln&quot; /exclude=&quot;Samples\**\*.cs;Tests\**\*.cs&quot;" />
+    <Xslt3SingleFileTransform Xslt="@(DuplicatesReportTemplate)" Input="$(DuplicatesReportPath)\dupReport.xml" Output="$(DuplicatesReportPath)\CodeDuplicatesReport.html" />
+  </Target>
+
+
+  <Target Name="InspectCode">
+    <MakeDir Directories="$(CodeInspectionsReportPath)" ContinueOnError="true" />
+    <Exec
+      WorkingDirectory="$(SolutionsPath)"
+      Command="$(CodeInspectionsExe) &quot;$(SolutionName).sln&quot; /output=&quot;$(CodeInspectionsReportPath)\CodeInspections.xml&quot; --caches-home=&quot;$(SolutionRoot)\ResharperCaches&quot;" />
+
+    <Xslt3SingleFileTransform  Xslt="@(CodeInspectionsReportTemplate)"
+      Input="$(CodeInspectionsReportPath)\CodeInspections.xml"
+      Output="$(CodeInspectionsReportPath)\CodeInspectionsReport.html" />
+  </Target>
+
+</Project>

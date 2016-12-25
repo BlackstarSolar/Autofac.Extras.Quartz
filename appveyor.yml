@@ -1,71 +1,50 @@
--
-  branches:
-    only:
-      - /release/.*/
-      - develop
-      - master
+version: .{build}
+clone_folder: c:\work\autofac.quartz
 
-  pull_requests:
-    do_not_increment_build_number: true
+pull_requests:
+  do_not_increment_build_number: true
+  
+nuget:
+  disable_publish_on_pr: true
+  
+os: Visual Studio 2015
 
-  nuget:
-    disable_publish_on_pr: true
+cache:
+  - ResharperCaches -> Solutions\**\packages.config
+  
+install:
+  - cmd: git submodule update --init --recursive
+  - ps: choco install GitVersion.Portable -y
 
-  os: Visual Studio 2015
+environment:
+  coveralls_repo_token:
+    secure: x75zPMliEANw+EkfM8o8aojsQLZ0MTxQnrYWDp3upMj9GAIR/WZXUk7lQuvEfGnp
+  appveyor_cache_entry_zip_args: -t7z -m0=lzma -mx=5 -ms=on
+    
+before_build:
+  - cmd: nuget restore Solutions/Autofac.Extras.Quartz.sln
+  - ps: gitversion /output buildserver /updateAssemblyInfo .\Common\AssemblyVersion.cs /ensureAssemblyInfo
 
-  cache:
-    - src\packages -> src\**\packages.config
+build_script:
+  - cmd: '"%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe" Build\Build.proj /t:Build;RunTests;UploadNUnitCoverage;FindDuplicates;InspectCode;PackageNuget /p:IsDesktopBuild=false'
 
-  install:
-    - ps: choco install GitVersion.Portable -y
+test: off
+  
+artifacts:
+  - path: Drops/**/*.nupkg
+    name: Nugets
+  - path: Drops/Duplicates/CodeDuplicatesReport.html
+    name: CodeDuplicates
+  - path: Drops/Inspections/CodeInspectionsReport.html
+    name: CodeInspections
 
-  before_build:
-    - ps: nuget restore src/Autofac.Extras.Quartz.sln
-    - ps: gitversion /l console /output buildserver /updateAssemblyInfo
-
-  build_script:
-    - cmd: '"%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe" build.proj /t:BuildAll;Pack /p:PackageVersion="%GitVersion_NuGetVersion%" /p:BuildConfig=Release'
-
-  test_script:
-  - cmd: >-
-      cd src/Tests/bin/Release
-
-      nunit3-console Autofac.Extras.Quartz.Tests.dll --result=test-results.xml;format=AppVeyor --dispose-runners --nocolor
-
-  artifacts:
-    - path: out/packages/*.nupkg
-
-  deploy:
-    - provider: NuGet
-      appveyor_repo_tag: true
-      api_key:
-        secure: yHJuxI0TVZU+g90YoGwOm8Zug7bxKNibC84NLkLusrMMNMcR86qizmvJR81KHtCS
-
-
--
-  pull_requests:
-    do_not_increment_build_number: true
-
-  nuget:
-    disable_publish_on_pr: true
-
-  os: Visual Studio 2015
-
-  cache:
-    - src\packages -> src\**\packages.config
-
-  install:
-    - ps: choco install GitVersion.Portable -y
-
-  before_build:
-    - ps: nuget restore src/Autofac.Extras.Quartz.sln
-    - ps: gitversion /l console /output buildserver /updateAssemblyInfo
-
-  build_script:
-    - cmd: '"%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe" build.proj /t:BuildAll /p:BuildConfig=Release'
-
-  test_script:
-  - cmd: >-
-      cd src/Tests/bin/Release
-
-      nunit3-console Autofac.Extras.Quartz.Tests.dll --result=test-results.xml;format=AppVeyor --dispose-runners --nocolor
+deploy:
+  - provider: NuGet
+    api_key:
+      secure: yHJuxI0TVZU+g90YoGwOm8Zug7bxKNibC84NLkLusrMMNMcR86qizmvJR81KHtCS
+    on:
+      branch: 
+        - develop
+        - /release\/v.*/
+        - /releases.*/
+        - /hotfixes.*/

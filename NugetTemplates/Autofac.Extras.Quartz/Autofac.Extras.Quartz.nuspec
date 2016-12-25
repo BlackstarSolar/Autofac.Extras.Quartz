@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Autofac.Extras.Quartz</id>
+    <version></version>
+    <title>Autofac.Extras.Quartz</title>
+    <authors>alphacloud</authors>
+    <owners>Alphacloud.net</owners>
+    <licenseUrl>http://mit-license.org/</licenseUrl>
+    <projectUrl>https://github.com/alphacloud/Autofac.Extras.Quartz</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Autofac integration for Quartz.Net</description>
+    <releaseNotes>
+Add .NET Standard 1.3 support;
+Upgrade Quartz.Net to v3 alpha;
+    </releaseNotes>
+    <copyright>Copyright 2014-2016</copyright>
+    <tags>alphacloud quartz autofac</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="Autofac" version="[4.2.1,5.0.0)" />
+        <dependency id="Quartz" version="[3.0.0-alpha2,4.0.0)" />
+      </group>
+      <group targetFramework=".NETStandard1.3">
+        <dependency id="Autofac" version="[4.2.1,5.0.0)" />
+        <dependency id="Quartz" version="[3.0.0-alpha2,4.0.0)" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
