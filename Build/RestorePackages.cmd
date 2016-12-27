@@ -1,2 +1,2 @@
 @echo off
-..\BuildSystem\Tools\nuget.exe restore ..\Solutions\SharpArch.sln 
+..\BuildSystem\Tools\nuget.exe restore ..\Solutions\Autofac.Extras.Quartz.sln
