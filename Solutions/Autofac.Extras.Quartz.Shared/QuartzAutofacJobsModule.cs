@@ -84,7 +84,6 @@ namespace Autofac.Extras.Quartz
 #else
                 .Where(type => !type.IsAbstract && typeof(IJob).IsAssignableFrom(type) && FilterJob(type))
 #endif
-
                 .AsSelf().InstancePerLifetimeScope();
 
             if (AutoWireProperties)

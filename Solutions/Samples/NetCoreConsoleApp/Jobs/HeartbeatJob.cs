@@ -13,15 +13,15 @@ namespace SimpleService.Jobs
     using System;
     using System.Threading.Tasks;
     using AppServices;
-    using Common.Logging;
     using Quartz;
+    using Quartz.Logging;
 
     /// <summary>
     /// Sample job.
     /// </summary>
     public class HeartbeatJob : IJob
     {
-        static readonly ILog s_log = LogManager.GetLogger<HeartbeatJob>();
+        static readonly ILog s_log = LogProvider.GetLogger(typeof(HeartbeatJob));
         readonly IHeartbeatService _hearbeat;
 
         public HeartbeatJob(IHeartbeatService hearbeat)

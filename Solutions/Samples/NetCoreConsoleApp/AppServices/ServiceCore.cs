@@ -7,12 +7,13 @@
 
 #endregion
 
-namespace SimpleService
+// ReSharper disable once CheckNamespace
+namespace SimpleService.AppServices
 {
     using System;
-    using Common.Logging;
     using JetBrains.Annotations;
     using Quartz;
+    using Quartz.Logging;
 
     /// <summary>
     /// Host class for windows service.
@@ -20,7 +21,7 @@ namespace SimpleService
     [UsedImplicitly]
     public class ServiceCore
     {
-        static readonly ILog s_log = LogManager.GetLogger<ServiceCore>();
+        static readonly ILog s_log = LogProvider.GetLogger(typeof(ServiceCore));
         readonly IScheduler _scheduler;
 
         /// <summary>

@@ -93,9 +93,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppServices\HeartbeatService.cs" />
-    <Compile Include="ServiceCore.cs" />
-    <Compile Include="Jobs\HeartbeatJob.cs" />
+    <Compile Include="..\NetCoreConsoleApp\AppServices\HeartbeatService.cs">
+      <Link>AppServices\HeartbeatService.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCoreConsoleApp\AppServices\ServiceCore.cs">
+      <Link>AppServices\ServiceCore.cs</Link>
+    </Compile>
+    <Compile Include="..\NetCoreConsoleApp\Jobs\HeartbeatJob.cs">
+      <Link>Jobs\HeartbeatJob.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

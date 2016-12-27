@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autofac.Extras.Quartz.Net45
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.NetStandard13", "Tests.NetStandard13\Tests.NetStandard13.csproj", "{5DAE5D75-5DF4-494A-A6E8-A1275C8CAD15}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "NetCoreConsoleApp", "Samples\NetCoreConsoleApp\NetCoreConsoleApp.xproj", "{DBAE72C6-4C61-4C81-825E-74F1F35C4BE5}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Autofac.Extras.Quartz.Shared\Autofac.Extras.Quartz.Shared.projitems*{00e3541e-c01e-4369-b6de-35a87c2d334e}*SharedItemsImports = 4
@@ -58,11 +60,16 @@ Global
 		{00E3541E-C01E-4369-B6DE-35A87C2D334E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5DAE5D75-5DF4-494A-A6E8-A1275C8CAD15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5DAE5D75-5DF4-494A-A6E8-A1275C8CAD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBAE72C6-4C61-4C81-825E-74F1F35C4BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBAE72C6-4C61-4C81-825E-74F1F35C4BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBAE72C6-4C61-4C81-825E-74F1F35C4BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBAE72C6-4C61-4C81-825E-74F1F35C4BE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B88F06DD-19F6-4AF3-841A-325CEE150CC4} = {1B76B117-D009-4310-A613-16947AA37DE1}
+		{DBAE72C6-4C61-4C81-825E-74F1F35C4BE5} = {1B76B117-D009-4310-A613-16947AA37DE1}
 	EndGlobalSection
 EndGlobal

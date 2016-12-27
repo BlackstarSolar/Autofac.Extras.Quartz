@@ -7,16 +7,17 @@
 
 #endregion
 
+// ReSharper disable once CheckNamespace
 namespace SimpleService.AppServices
 {
     using System.Threading.Tasks;
-    using Common.Logging;
     using JetBrains.Annotations;
+    using Quartz.Logging;
 
     [UsedImplicitly]
     class HeartbeatService : IHeartbeatService
     {
-        static readonly ILog s_log = LogManager.GetLogger<HeartbeatService>();
+        static readonly ILog s_log = LogProvider.GetLogger(typeof(HeartbeatService));
 
         public Task UpdateServiceState(string state)
         {

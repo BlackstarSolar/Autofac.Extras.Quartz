@@ -172,9 +172,10 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
-/src/.nuget/NuGet.exe
 .vs/
 /Common/AssemblyVersion.cs
 /Drops
 /NugetWorkspace
 /ResharperCaches
+project.lock.json
+project.fragment.lock.json

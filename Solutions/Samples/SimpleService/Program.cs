@@ -21,6 +21,7 @@ namespace SimpleService
     using Topshelf.Autofac;
     using Topshelf.Quartz;
     using Topshelf.ServiceConfigurators;
+    using ILog = Common.Logging.ILog;
 
     internal static class Program
     {
@@ -85,7 +86,7 @@ namespace SimpleService
             // configure and register Quartz
             var schedulerConfig = new NameValueCollection {
                 {"quartz.threadPool.threadCount", "3"},
-                {"quartz.threadPool.threadNamePrefix", "SchedulerWorker"},
+                //{"quartz.threadPool.threadNamePrefix", "SchedulerWorker"},
                 {"quartz.scheduler.threadName", "Scheduler"}
             };
 
