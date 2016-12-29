@@ -13,7 +13,7 @@ cache:
   - ResharperCaches -> Solutions\**\packages.config
   
 install:
-  - ps: git submodule update --init --recursive
+  - cmd: git submodule update --init --recursive
   - ps: dotnet --version
   - ps: choco install GitVersion.Portable -y
 
