@@ -5,13 +5,13 @@
   },
 
   "dependencies": {
-    "Autofac": "4.2.1",
+    "Autofac": "4.3.0",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.1.0"
     },
     "Quartz": "3.0.0-alpha2",
-    "Serilog": "2.3.0",
+    "Serilog": "2.4.0",
     "Serilog.Sinks.Literate": "2.0.0"
   },
   "frameworks": {
