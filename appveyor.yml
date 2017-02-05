@@ -14,12 +14,19 @@ cache:
   
 install:
   - cmd: git submodule update --init --recursive
-  - ps: dotnet --version
-  - ps: choco install GitVersion.Portable -y
+  - ps: >-
+      dotnet --version ;
+      choco install GitVersion.Portable -y ;
+      choco install Nuget.CommandLine -y ;
+      choco install resharper-clt.portable -y ;
+      choco install nunit.portable -y ;
+      choco install opencover.portable -y ; 
+      choco install reportgenerator.portable -y ;
+      choco install msbuild-xslt -pre -y;
 
 environment:
   coveralls_repo_token:
-    secure: x75zPMliEANw+EkfM8o8aojsQLZ0MTxQnrYWDp3upMj9GAIR/WZXUk7lQuvEfGnp
+    secure: yDtlwZxOr+meDM0iMA3pWo3VO+t2oRDIjf+accbVz3N2NO74W6yhF7lgRjw9B2Ek
   appveyor_cache_entry_zip_args: -t7z -m0=lzma -mx=5 -ms=on
     
 before_build:
